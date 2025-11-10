@@ -1,48 +1,47 @@
 package com.pluralsight.fooditems.sandwich;
 
+import com.pluralsight.FixedArrayList;
 import com.pluralsight.fooditems.MenuItem;
 import com.pluralsight.fooditems.Size;
-
-import java.util.ArrayList;
 
 public class SandwichOrder implements MenuItem {
 
     private Bread bread;
-    private final ArrayList<PremiumToppingMeat> premiumToppingMeats;
-    private final ArrayList<PremiumToppingCheese> premiumToppingCheeses;
-    private final ArrayList<RegularTopping> regularToppings;
-    private final ArrayList<Sauce> sauces;
+    private final FixedArrayList<PremiumToppingMeat> premiumToppingMeats;
+    private final FixedArrayList<PremiumToppingCheese> premiumToppingCheeses;
+    private final FixedArrayList<RegularTopping> regularToppings;
+    private final FixedArrayList<Sauce> sauces;
     private Size size;
     private boolean isToasted;
-    private Side side;
+    private final FixedArrayList<Side> sides;
 
     public SandwichOrder(Bread bread) {
         this.bread = bread;
-        this.premiumToppingMeats = new ArrayList<>();
-        this.premiumToppingCheeses = new ArrayList<>();
-        this.regularToppings = new ArrayList<>();
-        this.sauces = new ArrayList<>();
+        this.premiumToppingMeats = new FixedArrayList<>(2);
+        this.premiumToppingCheeses = new FixedArrayList<>(2);
+        this.regularToppings = new FixedArrayList<>(5);
+        this.sauces = new FixedArrayList<>(3);
         this.isToasted = false;
-        this.side = null;
+        this.sides = new FixedArrayList<>(2);
     }
 
     public Bread getBread() {
         return bread;
     }
 
-    public ArrayList<PremiumToppingMeat> getPremiumToppingMeats() {
+    public FixedArrayList<PremiumToppingMeat> getPremiumToppingMeats() {
         return premiumToppingMeats;
     }
 
-    public ArrayList<PremiumToppingCheese> getPremiumToppingCheeses() {
+    public FixedArrayList<PremiumToppingCheese> getPremiumToppingCheeses() {
         return premiumToppingCheeses;
     }
 
-    public ArrayList<RegularTopping> getRegularToppings() {
+    public FixedArrayList<RegularTopping> getRegularToppings() {
         return regularToppings;
     }
 
-    public ArrayList<Sauce> getSauces() {
+    public FixedArrayList<Sauce> getSauces() {
         return sauces;
     }
 
@@ -54,8 +53,8 @@ public class SandwichOrder implements MenuItem {
         return isToasted;
     }
 
-    public Side getSide() {
-        return side;
+    public FixedArrayList<Side> getSides() {
+        return sides;
     }
 
     public void setBread(Bread bread) {
@@ -70,39 +69,43 @@ public class SandwichOrder implements MenuItem {
         this.size = size;
     }
 
-    public void setSide(Side side) {
-        this.side = side;
-    }
-
     public void addMeat(PremiumToppingMeat premiumToppingMeat) {
-        if (premiumToppingMeats.size() == 2) {
-            System.out.println("You may only have up to 2 meats in your sandwich.");
-        } else {
+        try {
             this.premiumToppingMeats.add(premiumToppingMeat);
+        } catch (IllegalArgumentException e) {
+            System.out.println(premiumToppingMeat + " not added, you may only have up to 2 meats in your sandwich.");
         }
     }
 
-    public void addMeat(PremiumToppingCheese premiumToppingCheese) {
-        if (premiumToppingCheeses.size() == 2) {
-            System.out.println("You may only have up to 2 cheeses in your sandwich.");
-        } else {
+    public void addCheese(PremiumToppingCheese premiumToppingCheese) {
+        try {
             this.premiumToppingCheeses.add(premiumToppingCheese);
+        } catch (IllegalArgumentException e) {
+            System.out.println(premiumToppingCheese + " not added, you may only have up to 2 cheeses in your sandwich.");
         }
     }
 
     public void addRegularTopping(RegularTopping regularTopping) {
-        if (regularToppings.size() == 5) {
-            System.out.println("You may only have up to 5 toppings in your sandwich.");
-        } else {
+        try {
             this.regularToppings.add(regularTopping);
+        } catch (IllegalArgumentException e) {
+            System.out.println(regularTopping + " not added, you may only have up to 5 toppings in your sandwich.");
         }
     }
 
     public void addSauce(Sauce sauce) {
-        if (sauces.size() == 3) {
-            System.out.println("You may only have up to 3 sauces in your sandwich.");
-        } else {
+        try {
             this.sauces.add(sauce);
+        } catch (IllegalArgumentException e) {
+            System.out.println(sauce + " not added, you may only have up to 3 sauces in your sandwich.");
+        }
+    }
+
+    public void addSide(Side side) {
+        try {
+            this.sides.add(side);
+        } catch (IllegalArgumentException e) {
+            System.out.println(side + " not added, you may only have up to 2 sides with your sandwich.");
         }
     }
 
@@ -116,19 +119,21 @@ public class SandwichOrder implements MenuItem {
 
         int totalCal = 0;
         totalCal += bread.getCalories();
-        totalCal += premiumToppingMeats.stream()
+        totalCal += premiumToppingMeats.getItems().stream()
                 .mapToInt(PremiumToppingMeat::getCalories) // Extract calories from each meat topping
                 .sum();
-        totalCal += premiumToppingCheeses.stream()
+        totalCal += premiumToppingCheeses.getItems().stream()
                 .mapToInt(PremiumToppingCheese::getCalories) // Extract calories from each cheese topping
                 .sum();
-        totalCal += regularToppings.stream()
+        totalCal += regularToppings.getItems().stream()
                 .mapToInt(RegularTopping::getCalories) // Extract calories from each regular topping
                 .sum();
-        totalCal += sauces.stream()
+        totalCal += sauces.getItems().stream()
                 .mapToInt(Sauce::getCalories) // Extract calories from each sauce
                 .sum();
-        totalCal += (side != null) ? side.getCalories() : 0;
+        totalCal += sides.getItems().stream()
+                .mapToInt(Side::getCalories) // Extract calories from each side
+                .sum();
 
         return totalCal;
     }

@@ -2,7 +2,7 @@ package com.pluralsight.fooditems.sandwich;
 
 public class RegularTopping implements Ingredient {
 
-    private final RegularToppingType regularToppingType;
+    private RegularToppingType regularToppingType;
     private boolean isExtra;
 
     // Constructor to set the calories value for each regular topping
@@ -25,5 +25,9 @@ public class RegularTopping implements Ingredient {
     // Setter to mark the topping as extra
     public void setExtra(boolean isExtra) {
         this.isExtra = isExtra;
+    }
+
+    public void setRegularToppingType(RegularToppingType regularToppingType) {
+        this.regularToppingType = regularToppingType;
     }
 }

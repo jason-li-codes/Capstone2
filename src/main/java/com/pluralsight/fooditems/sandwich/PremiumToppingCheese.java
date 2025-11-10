@@ -2,7 +2,7 @@ package com.pluralsight.fooditems.sandwich;
 
 public class PremiumToppingCheese implements Ingredient {
 
-    private final CheeseType cheeseType;
+    private CheeseType cheeseType;
     private boolean isExtra;
 
     // Constructor to set the calories value for each premium cheese topping
@@ -27,4 +27,7 @@ public class PremiumToppingCheese implements Ingredient {
         this.isExtra = isExtra;
     }
 
+    public void setCheeseType(CheeseType cheeseType) {
+        this.cheeseType = cheeseType;
+    }
 }

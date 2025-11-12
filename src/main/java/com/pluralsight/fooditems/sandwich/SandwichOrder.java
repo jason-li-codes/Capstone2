@@ -1,5 +1,8 @@
 package com.pluralsight.fooditems.sandwich;
 
+import com.pluralsight.fooditems.sandwich.swtypes.CheeseType;
+import com.pluralsight.fooditems.sandwich.swtypes.MeatType;
+import com.pluralsight.fooditems.sandwich.swtypes.RegularToppingType;
 import com.pluralsight.utilizedclasses.FixedArrayList;
 import com.pluralsight.fooditems.MenuItem;
 import com.pluralsight.fooditems.Size;
@@ -281,7 +284,11 @@ public class SandwichOrder extends MenuItem {
                 .mapToInt(Side::getCalories) // Extract calories from each side
                 .sum();
 
-        this.calories = totalCal;
+        this.calories = totalCal * switch (size) {
+            case SMALL -> 1;
+            case MEDIUM -> 2;
+            case LARGE -> 3;
+        };
     }
 
 }

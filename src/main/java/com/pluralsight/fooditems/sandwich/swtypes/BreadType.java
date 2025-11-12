@@ -1,4 +1,4 @@
-package com.pluralsight.fooditems.sandwich;
+package com.pluralsight.fooditems.sandwich.swtypes;
 
 public enum BreadType {
 

@@ -1,6 +1,4 @@
-package com.pluralsight.fooditems.sandwich;
-
-import com.pluralsight.fooditems.Calories;
+package com.pluralsight.fooditems.sandwich.swtypes;
 
 public enum SauceType {
 

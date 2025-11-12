@@ -1,5 +1,7 @@
 package com.pluralsight.fooditems.sandwich;
 
+import com.pluralsight.fooditems.sandwich.swtypes.RegularToppingType;
+
 public class RegularTopping extends SandwichFilling {
 
     private RegularToppingType regularToppingType;

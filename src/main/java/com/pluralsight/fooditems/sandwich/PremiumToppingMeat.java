@@ -1,5 +1,7 @@
 package com.pluralsight.fooditems.sandwich;
 
+import com.pluralsight.fooditems.sandwich.swtypes.MeatType;
+
 public class PremiumToppingMeat extends SandwichFilling {
 
     private MeatType meatType;

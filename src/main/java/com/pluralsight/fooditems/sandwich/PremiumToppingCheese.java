@@ -12,6 +12,10 @@ public class PremiumToppingCheese extends SandwichFilling {
         updateCalories();
     }
 
+    public CheeseType getCheeseType() {
+        return cheeseType;
+    }
+
     public void setCheeseType(CheeseType cheeseType) {
         this.cheeseType = cheeseType;
         updateCalories();

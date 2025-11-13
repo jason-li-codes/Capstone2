@@ -12,6 +12,10 @@ public class Sauce extends Calories {
         updateCalories();
     }
 
+    public SauceType getSauceType() {
+        return sauceType;
+    }
+
     public void updateCalories() {
         this.calories = switch (sauceType) {
             case MAYO -> 50;

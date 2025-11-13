@@ -12,6 +12,10 @@ public class Side extends Calories {
         updateCalories();
     }
 
+    public SideType getSideType() {
+        return sideType;
+    }
+
     private void updateCalories() {
         this.calories = switch (sideType) {
             case FRIES -> 375;

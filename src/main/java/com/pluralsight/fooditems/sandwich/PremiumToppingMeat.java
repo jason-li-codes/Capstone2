@@ -13,6 +13,10 @@ public class PremiumToppingMeat extends SandwichFilling {
         updateCalories();
     }
 
+    public MeatType getMeatType() {
+        return meatType;
+    }
+
     public void setMeatType(MeatType meatType) {
         this.meatType = meatType;
     }

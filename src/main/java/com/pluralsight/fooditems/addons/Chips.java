@@ -16,4 +16,8 @@ public class Chips extends MenuItem {
         };
         this.price = 1.50;
     }
+
+    public ChipsType getChipsType() {
+        return chipsType;
+    }
 }

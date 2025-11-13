@@ -16,4 +16,7 @@ public class Bread extends Calories {
         };
     }
 
+    public BreadType getBreadType() {
+        return breadType;
+    }
 }

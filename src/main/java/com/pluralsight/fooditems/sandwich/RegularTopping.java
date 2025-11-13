@@ -13,6 +13,10 @@ public class RegularTopping extends SandwichFilling {
         updateCalories();
     }
 
+    public RegularToppingType getRegularToppingType() {
+        return regularToppingType;
+    }
+
     public void setRegularToppingType(RegularToppingType regularToppingType) {
         this.regularToppingType = regularToppingType;
     }

@@ -8,4 +8,7 @@ public class CustomerOrder {
 
     private ArrayList<MenuItem> menuItems;
 
+    public ArrayList<MenuItem> getMenuItems() {
+        return menuItems;
+    }
 }

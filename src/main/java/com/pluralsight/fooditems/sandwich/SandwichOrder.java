@@ -291,4 +291,74 @@ public class SandwichOrder extends MenuItem {
         };
     }
 
+    @Override
+    public String toString(String title) {
+
+        StringBuilder receiptLine = new StringBuilder();
+        // Add Header
+        receiptLine.append("=====================================\n")
+                .append(title).append("\n")
+                .append("=====================================\n");
+        // Add basic order information
+        receiptLine.append(String.format("Size: %s\n", getSize()));
+        receiptLine.append(String.format("Bread: %s\n", getBread().getBreadType()));
+        // Add Toasting Option
+        receiptLine.append("Toasted: ").append(isToasted() ? "Yes" : "No").append("\n");
+        // Add Meats
+        if (!getPremiumToppingMeats().getItems().isEmpty()) {
+            receiptLine.append("Meats:\n");
+            for (PremiumToppingMeat meat : getPremiumToppingMeats().getItems()) {
+                receiptLine.append(" - ").append(meat.getMeatType()).append(" (")
+                        .append(meat.isExtra() ? "Extra" : "Regular").append(")\n");
+            }
+        } else {
+            receiptLine.append("No meats selected.\n");
+        }
+        // Add Cheeses
+        if (!getPremiumToppingCheeses().getItems().isEmpty()) {
+            receiptLine.append("Cheeses:\n");
+            for (PremiumToppingCheese cheese : getPremiumToppingCheeses().getItems()) {
+                receiptLine.append(" - ").append(cheese.getCheeseType()).append(" (")
+                        .append(cheese.isExtra() ? "Extra" : "Regular").append(")\n");
+            }
+        } else {
+            receiptLine.append("No cheeses selected.\n");
+        }
+        // Add Regular Toppings
+        if (!getRegularToppings().getItems().isEmpty()) {
+            receiptLine.append("Toppings:\n");
+            for (RegularTopping topping : getRegularToppings().getItems()) {
+                receiptLine.append(" - ").append(topping.getRegularToppingType()).append("\n");
+            }
+        } else {
+            receiptLine.append("No toppings selected.\n");
+        }
+        // Add Sauces
+        if (!getSauces().getItems().isEmpty()) {
+            receiptLine.append("Sauces:\n");
+            for (Sauce sauce : getSauces().getItems()) {
+                receiptLine.append(" - ").append(sauce.getSauceType()).append("\n");
+            }
+        } else {
+            receiptLine.append("No sauces selected.\n");
+        }
+        // Add Sides
+        if (!getSides().getItems().isEmpty()) {
+            receiptLine.append("Sides:\n");
+            for (Side side : getSides().getItems()) {
+                receiptLine.append("  - ").append(side.getSideType()).append("\n");
+            }
+        } else {
+            receiptLine.append("No sides selected.\n");
+        }
+        // Add Price and Calories
+        receiptLine.append("=====================================\n")
+                .append(String.format("Price: $%.2f\n", getPrice()))
+                .append(String.format("Calories: %d\n", getCalories()));
+        // Add Footer
+        receiptLine.append("=====================================\n");
+        // Return StringBuilder as String
+        return receiptLine.toString();
+    }
+
 }

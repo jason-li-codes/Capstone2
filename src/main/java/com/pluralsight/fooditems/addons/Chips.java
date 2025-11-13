@@ -20,4 +20,19 @@ public class Chips extends MenuItem {
     public ChipsType getChipsType() {
         return chipsType;
     }
+
+    @Override
+    public String toString(String title) {
+        return "=====================================\n" +
+                title + "\n" +
+                "=====================================\n" +
+                // Add Order Information
+                String.format("Brand: %s\n", getChipsType()) +
+                // Add Price and Calories
+                "=====================================\n" +
+                String.format("Price: $%.2f\n", getPrice()) +
+                String.format("Calories: %d\n", getCalories()) +
+                // Add Footer
+                "=====================================\n";
+    }
 }

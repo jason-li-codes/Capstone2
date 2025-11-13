@@ -55,4 +55,20 @@ public class Drink extends MenuItem {
             case LARGE -> 3;
         };
     }
+
+    @Override
+    public String toString(String title) {
+        return "=====================================\n" +
+                "                DRINK                \n" +
+                "=====================================\n" +
+                // Add Order Information
+                String.format("Size: %s\n", getSize()) +
+                String.format("Brand: %s\n", getDrinkType()) +
+                // Add Price and Calories
+                "=====================================\n" +
+                String.format("Price: $%.2f\n", getPrice()) +
+                String.format("Calories: %d\n", getCalories()) +
+                // Add Footer
+                "=====================================\n";
+    }
 }

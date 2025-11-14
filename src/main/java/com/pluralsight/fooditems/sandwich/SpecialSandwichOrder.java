@@ -5,7 +5,7 @@ import com.pluralsight.fooditems.enums.*;
 
 public class SpecialSandwichOrder extends SandwichOrder {
 
-    private String sandwichName;
+    private final String sandwichName;
 
     public SpecialSandwichOrder(String specialSandwich) {
         super(selectBread(specialSandwich), Size.MEDIUM); // call to parent constructor
@@ -24,8 +24,6 @@ public class SpecialSandwichOrder extends SandwichOrder {
                 this.addRegularTopping(new RegularTopping(RegularToppingType.SPINACH, false));
                 this.addSauce(new Sauce(SauceType.PESTO));
                 this.addSide(new Side(SideType.PICKLES));
-                this.setToasted(true);
-                this.price = 10;
                 break;
 
             case "smokehouse stack":
@@ -37,8 +35,6 @@ public class SpecialSandwichOrder extends SandwichOrder {
                 this.addRegularTopping(new RegularTopping(RegularToppingType.PICKLES, false));
                 this.addSauce(new Sauce(SauceType.MUSTARD));
                 this.addSide(new Side(SideType.FRIES));
-                this.setToasted(true);
-                this.price = 10;
                 break;
 
             case "southwest sunrise":
@@ -49,8 +45,6 @@ public class SpecialSandwichOrder extends SandwichOrder {
                 this.addRegularTopping(new RegularTopping(RegularToppingType.TOMATO, false));
                 this.addSauce(new Sauce(SauceType.GUACAMOLE));
                 this.addSide(new Side(SideType.PICKLES));
-                this.setToasted(true);
-                this.price = 10;
                 break;
 
             case "pastrami king":
@@ -60,8 +54,6 @@ public class SpecialSandwichOrder extends SandwichOrder {
                 this.addRegularTopping(new RegularTopping(RegularToppingType.PICKLES, false));
                 this.addSauce(new Sauce(SauceType.RANCH));
                 this.addSide(new Side(SideType.FRIES));
-                this.setToasted(true);
-                this.price = 10;
                 break;
 
             case "garden delight":
@@ -73,8 +65,6 @@ public class SpecialSandwichOrder extends SandwichOrder {
                 this.addRegularTopping(new RegularTopping(RegularToppingType.OLIVES, false));
                 this.addSauce(new Sauce(SauceType.PESTO));
                 this.addSide(new Side(SideType.PICKLES));
-                this.setToasted(true);
-                this.price = 10;
                 break;
 
             case "mediterranean delight":
@@ -85,13 +75,12 @@ public class SpecialSandwichOrder extends SandwichOrder {
                 this.addRegularTopping(new RegularTopping(RegularToppingType.PEPPERS, false));
                 this.addSauce(new Sauce(SauceType.CAESAR));
                 this.addSide(new Side(SideType.PICKLES));
-                this.setToasted(true);
-                this.price = 10;
                 break;
-
             default:
                 System.out.println("Unknown special sandwich: " + specialSandwich);
         }
+        this.setToasted(true);
+        this.price = 10;
     }
 
     // Select bread for each special sandwich

@@ -4,6 +4,7 @@ import com.pluralsight.fooditems.enums.MeatType;
 
 public class PremiumToppingMeat extends SandwichFilling {
 
+    // Take enum MeatType as attribute
     private MeatType meatType;
 
     // Constructor to set the calories value for each premium cheese topping
@@ -13,6 +14,7 @@ public class PremiumToppingMeat extends SandwichFilling {
         updateCalories();
     }
 
+    // Getter and setter
     public MeatType getMeatType() {
         return meatType;
     }
@@ -21,6 +23,7 @@ public class PremiumToppingMeat extends SandwichFilling {
         this.meatType = meatType;
     }
 
+    // Update calorie value based on MeatType with switch statement
     public void updateCalories() {
         this.calories = switch (meatType) {
             case TURKEY -> 120;

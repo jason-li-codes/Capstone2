@@ -5,17 +5,21 @@ import com.pluralsight.fooditems.enums.SauceType;
 
 public class Sauce extends Calories {
 
+    // Take enum SauceType as attribute
     private final SauceType sauceType;
 
+    // Constructor which sets SauceType and calories value
     public Sauce(SauceType sauceType) {
         this.sauceType = sauceType;
         updateCalories();
     }
 
+    // Getter
     public SauceType getSauceType() {
         return sauceType;
     }
 
+    // Update calorie value based on SauceType with switch statement
     public void updateCalories() {
         this.calories = switch (sauceType) {
             case MAYO -> 50;

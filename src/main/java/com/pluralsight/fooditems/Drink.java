@@ -5,9 +5,11 @@ import com.pluralsight.fooditems.enums.Size;
 
 public class Drink extends MenuItem {
 
+    // Take enums DrinkType and Size as attributes
     private DrinkType drinkType;
     private Size size;
 
+    // Constructor which sets DrinkType, calories, and price value
     public Drink(DrinkType drinkType, Size size) {
         this.drinkType = drinkType;
         this.size = size;
@@ -15,6 +17,7 @@ public class Drink extends MenuItem {
         updatePrice();
     }
 
+    // Getters and setters
     public DrinkType getDrinkType() {
         return drinkType;
     }
@@ -34,6 +37,7 @@ public class Drink extends MenuItem {
         updatePrice();
     }
 
+    // Update price of Drink by going through switch case
     public void updatePrice() {
         this.price = switch (size) {
             case SMALL -> 2;
@@ -42,6 +46,7 @@ public class Drink extends MenuItem {
         };
     }
 
+    // Update calories of Drink by going through all attributes with switch cases
     public void updateCalories() {
         this.calories = switch (drinkType) {
             case KO_KUH -> 100;
@@ -56,6 +61,7 @@ public class Drink extends MenuItem {
         };
     }
 
+    // Overidden toString method for cleaner formatting
     @Override
     public String toString(String title) {
         return title + "\n" +

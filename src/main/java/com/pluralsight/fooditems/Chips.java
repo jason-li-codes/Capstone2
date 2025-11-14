@@ -4,8 +4,10 @@ import com.pluralsight.fooditems.enums.ChipsType;
 
 public class Chips extends MenuItem {
 
+    // Take enum ChipsType as attribute
     private final ChipsType chipsType;
 
+    // Constructor which sets ChipsType, calories, and price value
     public Chips(ChipsType chipsType) {
         this.chipsType = chipsType;
         this.calories = switch (chipsType) {
@@ -17,10 +19,12 @@ public class Chips extends MenuItem {
         this.price = 1.50;
     }
 
+    // Getter
     public ChipsType getChipsType() {
         return chipsType;
     }
 
+    // Overidden toString method for cleaner formatting
     @Override
     public String toString(String title) {
         return title + "\n" +

@@ -23,7 +23,6 @@ public class UserInterface {
         while (true) {
             PrintColumns.twoColumns("""
                     Welcome to Delicatessen Delights!
-                    ======================MAIN MENU======================
                     (1) Start new order
                     (0) Exit
                     """, PrintMenu.homepage());
@@ -120,6 +119,7 @@ public class UserInterface {
                 Thank you for coming to Delicatessen Delights, please come again!
                 """, OrderWriter.toString(customerOrder));
         customerOrder.getMenuItems().clear();
+        input.close();
         System.exit(0);
     }
 
@@ -836,8 +836,6 @@ public class UserInterface {
 
     private static <T> T getValidInput(Class<T> type) {
 
-        boolean allowNull = false;
-
         String userInput;
         T parsedValue = null;
 
@@ -861,7 +859,7 @@ public class UserInterface {
                 }
             }
             // If value is valid or null is allowed
-            if (allowNull || parsedValue != null) {
+            if (parsedValue != null) {
                 return parsedValue;
             } else {
                 System.out.println("Sorry, I don't know what you mean, please try again.");

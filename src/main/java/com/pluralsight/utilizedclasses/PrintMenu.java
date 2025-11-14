@@ -2,6 +2,7 @@ package com.pluralsight.utilizedclasses;
 
 public class PrintMenu {
 
+    // Static methods for printing full menus for cleaner formatting
     public static String homepage() {
         return """
                                       ^
@@ -63,8 +64,8 @@ public class PrintMenu {
     public static String sandwichMenu() {
         return """
                 ╔══════════════════════════════════════════════════════╦══════════════════════════════════════════════════════╗
-                ║              DELICATESSEN DELIGHTS:                  ║          (All calorie counts are for SMALL sizes)    ║
-                ║                  SANDWICH MENU                       ║                                                      ║
+                ║                DELICATESSEN DELIGHTS:                ║       (All calorie counts are for SMALL sizes)       ║
+                ║                    SANDWICH MENU                     ║                                                      ║
                 ╠══════════════════════════════════════════════════════╬══════════════════════════════════════════════════════╣
                 ║ SANDWICH SIZES                                       ║ REGULAR TOPPINGS (Free, Limit: 5)                    ║
                 ║   Small  (4")  ............ $5.50                    ║   - Lettuce (5)           |   - Peppers (7)          ║

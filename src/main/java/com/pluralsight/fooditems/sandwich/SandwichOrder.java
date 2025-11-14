@@ -1,14 +1,12 @@
 package com.pluralsight.fooditems.sandwich;
 
-import com.pluralsight.fooditems.enums.CheeseType;
-import com.pluralsight.fooditems.enums.MeatType;
-import com.pluralsight.fooditems.enums.RegularToppingType;
 import com.pluralsight.utilizedclasses.FixedArrayList;
 import com.pluralsight.fooditems.MenuItem;
 import com.pluralsight.fooditems.enums.Size;
 
 public class SandwichOrder extends MenuItem {
 
+    // SandwichOrder takes in all the following attributes, with several using FixedArrayLists
     private Bread bread;
     private Size size;
     private final FixedArrayList<PremiumToppingMeat> premiumToppingMeats;
@@ -18,16 +16,20 @@ public class SandwichOrder extends MenuItem {
     private final FixedArrayList<Side> sides;
     private boolean isToasted;
 
+    // Constructor for SandwichOrder only requires a Bread and Size
     public SandwichOrder(Bread bread, Size size) {
         this.bread = bread;
         this.size = size;
+        // FixedArrayLists are initialized with appropriate limits
         this.premiumToppingMeats = new FixedArrayList<>(2);
         this.premiumToppingCheeses = new FixedArrayList<>(2);
         this.regularToppings = new FixedArrayList<>(5);
         this.sauces = new FixedArrayList<>(3);
         this.sides = new FixedArrayList<>(2);
         this.isToasted = false;
+        // Default calories are set based on bread
         this.calories = bread.getCalories();
+        // Default price is set based on size
         this.price = switch (size) {
             case SMALL -> 5.50;
             case MEDIUM -> 7;
@@ -35,6 +37,7 @@ public class SandwichOrder extends MenuItem {
         };
     }
 
+    // Getters and setters
     public Bread getBread() {
         return bread;
     }
@@ -82,6 +85,8 @@ public class SandwichOrder extends MenuItem {
         updatePrice();
     }
 
+    // Custom adding methods which use try/catch blocks to avoid going over FixedArrayList limits
+    // Each method updates calories and price attributes accordingly
     public void addMeat(PremiumToppingMeat premiumToppingMeat) {
         try {
             this.premiumToppingMeats.add(premiumToppingMeat);
@@ -129,8 +134,10 @@ public class SandwichOrder extends MenuItem {
         }
     }
 
+    // Update price of SandwichOrder by going through all attributes individually
     public void updatePrice() {
 
+        // Base price depends on size
         double totalPrice = switch (size) {
             case SMALL -> 5.50;
             case MEDIUM -> 7;
@@ -176,14 +183,16 @@ public class SandwichOrder extends MenuItem {
                             case LARGE -> 0.90;   // Extra cheese price for large size
                         })
                         .sum();  // Sum all the extra cheese prices
-
+        // Update value by changing price attribute
         price = totalPrice;
     }
 
+    // Update calories of SandwichOrder by going through all attributes individually
     public void updateCalories() {
 
+        // Begin with integer of value 0
         int totalCal = 0;
-        totalCal += bread.getCalories();
+        totalCal += bread.getCalories(); // Extract calories from bread
         totalCal += premiumToppingMeats.getItems().stream()
                 .mapToInt(PremiumToppingMeat::getCalories) // Extract calories from each meat topping
                 .sum();
@@ -200,6 +209,7 @@ public class SandwichOrder extends MenuItem {
                 .mapToInt(Side::getCalories) // Extract calories from each side
                 .sum();
 
+        // Use multiplier depending on SandwichOrder size
         this.calories = totalCal * switch (size) {
             case SMALL -> 1;
             case MEDIUM -> 2;
@@ -207,9 +217,11 @@ public class SandwichOrder extends MenuItem {
         };
     }
 
+    // Overridden toString method, which outputs String with cleaner formatting
     @Override
     public String toString(String title) {
 
+        // Use StringBuilder to build larger String with cleaner formatting
         StringBuilder receiptLine = new StringBuilder();
         // Add Header
         receiptLine.append(title).append("\n")
@@ -219,6 +231,8 @@ public class SandwichOrder extends MenuItem {
         receiptLine.append(String.format("Bread: %s\n", getBread().getBreadType().name()));
         // Add Toasting Option
         receiptLine.append("Toasted: ").append(isToasted() ? "Yes" : "No").append("\n");
+
+        // For FixedArrayLists, use forEach methods to accurately read all attributes
         // Add Meats
         if (!getPremiumToppingMeats().getItems().isEmpty()) {
             receiptLine.append("Meats:\n");
@@ -226,7 +240,7 @@ public class SandwichOrder extends MenuItem {
                 receiptLine.append(" - ").append(meat.getMeatType().name()).append(" (")
                         .append(meat.isExtra() ? "Extra" : "Regular").append(")\n");
             }
-        } else {
+        } else { // If FixedArrayList is empty, output custom N/A String
             receiptLine.append("No meats selected.\n");
         }
         // Add Cheeses
@@ -236,7 +250,7 @@ public class SandwichOrder extends MenuItem {
                 receiptLine.append(" - ").append(cheese.getCheeseType().name()).append(" (")
                         .append(cheese.isExtra() ? "Extra" : "Regular").append(")\n");
             }
-        } else {
+        } else { // If FixedArrayList is empty, output custom N/A String
             receiptLine.append("No cheeses selected.\n");
         }
         // Add Regular Toppings
@@ -246,7 +260,7 @@ public class SandwichOrder extends MenuItem {
                 receiptLine.append(" - ").append(topping.getRegularToppingType().name()).append(" (")
                         .append(topping.isExtra() ? "Extra" : "Regular").append(")\n");
             }
-        } else {
+        } else { // If FixedArrayList is empty, output custom N/A String
             receiptLine.append("No toppings selected.\n");
         }
         // Add Sauces
@@ -255,7 +269,7 @@ public class SandwichOrder extends MenuItem {
             for (Sauce sauce : getSauces().getItems()) {
                 receiptLine.append(" - ").append(sauce.getSauceType().name()).append("\n");
             }
-        } else {
+        } else { // If FixedArrayList is empty, output custom N/A String
             receiptLine.append("No sauces selected.\n");
         }
         // Add Sides
@@ -264,7 +278,7 @@ public class SandwichOrder extends MenuItem {
             for (Side side : getSides().getItems()) {
                 receiptLine.append("  - ").append(side.getSideType().name()).append("\n");
             }
-        } else {
+        } else { // If FixedArrayList is empty, output custom N/A String
             receiptLine.append("No sides selected.\n");
         }
         // Add Price and Calories

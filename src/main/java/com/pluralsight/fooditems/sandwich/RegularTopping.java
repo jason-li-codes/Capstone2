@@ -4,6 +4,7 @@ import com.pluralsight.fooditems.enums.RegularToppingType;
 
 public class RegularTopping extends SandwichFilling {
 
+    // Take enum RegularToppingType as attribute
     private RegularToppingType regularToppingType;
 
     // Constructor to set the calories value for each regular topping
@@ -13,6 +14,7 @@ public class RegularTopping extends SandwichFilling {
         updateCalories();
     }
 
+    // Getter and setter
     public RegularToppingType getRegularToppingType() {
         return regularToppingType;
     }
@@ -21,6 +23,7 @@ public class RegularTopping extends SandwichFilling {
         this.regularToppingType = regularToppingType;
     }
 
+    // Update calorie value based on RegularToppingType with switch statement
     public void updateCalories() {
         this.calories = switch (regularToppingType) {
             case LETTUCE -> 5;

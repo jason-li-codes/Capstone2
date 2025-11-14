@@ -2,19 +2,23 @@ package com.pluralsight.fooditems.sandwich;
 
 import com.pluralsight.fooditems.enums.*;
 
-
 public class SpecialSandwichOrder extends SandwichOrder {
 
+    // SpecialSandwichOrder has only one unique attribute, its sandwichName
     private final String sandwichName;
 
+    // Constructor takes in sandwichName
     public SpecialSandwichOrder(String specialSandwich) {
-        super(selectBread(specialSandwich), Size.MEDIUM); // call to parent constructor
+        // Call on constructor of superclass SandwichOrder
+        super(selectBread(specialSandwich), Size.MEDIUM);
         this.sandwichName = specialSandwich;
+        // Call private method to set up SpecialSandwichOrder
         configureSandwich(specialSandwich);
     }
 
     // Configure sandwich toppings, meats, cheese, sauces
     private void configureSandwich(String specialSandwich) {
+        // Use switch case to create appropriate SandwichOrder with the correct SandwichFilling
         switch (specialSandwich.toLowerCase()) {
             case "green mountain melt":
                 this.addMeat(new PremiumToppingMeat(MeatType.TURKEY, true));
@@ -76,14 +80,16 @@ public class SpecialSandwichOrder extends SandwichOrder {
                 this.addSauce(new Sauce(SauceType.CAESAR));
                 this.addSide(new Side(SideType.PICKLES));
                 break;
+            // Default message is best practice but should never run, since user doesn't have access to private method
             default:
                 System.out.println("Unknown special sandwich: " + specialSandwich);
         }
+        // All SpecialSandwichOrders have these attribute values
         this.setToasted(true);
         this.price = 10;
     }
 
-    // Select bread for each special sandwich
+    // Select bread for each special sandwich based on sandwichName
     private static Bread selectBread(String specialSandwich) {
         return switch (specialSandwich.toLowerCase()) {
             case "green mountain melt", "garden delight" -> new Bread(BreadType.MULTIGRAIN);
@@ -93,6 +99,7 @@ public class SpecialSandwichOrder extends SandwichOrder {
         };
     }
 
+    // Overidden toString method to include sandwichName instead of default title
     @Override
     public String toString() {
         return super.toString(sandwichName);

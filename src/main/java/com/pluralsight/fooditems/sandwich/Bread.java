@@ -5,8 +5,10 @@ import com.pluralsight.fooditems.enums.BreadType;
 
 public class Bread extends Calories {
 
-    private BreadType breadType;
+    // Take enum BreadType as attribute
+    private final BreadType breadType;
 
+    // Constructor which sets BreadType and calories value
     public Bread(BreadType breadType) {
         this.breadType = breadType;
         this.calories = switch (breadType) {
@@ -17,6 +19,7 @@ public class Bread extends Calories {
         };
     }
 
+    // getter for BreadType
     public BreadType getBreadType() {
         return breadType;
     }

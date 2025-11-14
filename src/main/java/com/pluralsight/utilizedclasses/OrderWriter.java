@@ -7,6 +7,7 @@ import java.io.FileWriter;
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -14,17 +15,24 @@ public class OrderWriter {
 
     public static void writeReceipt(CustomerOrder customerOrder) {
 
-        String formattedDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss"));
+        // Create LocalDateTime for title of new file
+        LocalDateTime currentTime = LocalDateTime.now();
+        // Format LocalDateTime to be valid as file name
+        String formattedDate = currentTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss"));
+        // Create new file name
         String newFileName = "receipts/" + formattedDate + "_DELI_ORDER.txt";
-
+        // Use try with resources to write receipt
         try (BufferedWriter bufWriter = new BufferedWriter(new FileWriter(newFileName))) {
-            bufWriter.write(newFileName.substring(0, newFileName.length() - 4) + "\n\n");
+            // Write header
+            bufWriter.write(currentTime.toString());
             bufWriter.write("--------------------------------------------------------\n");
+            // Write each MenuItem with numbers
             int itemNumber = 1;
             for (MenuItem menuItem : customerOrder.getMenuItems()) {
                 bufWriter.write(itemNumber++ + ". ");
                 bufWriter.write(formatOrder(menuItem));
             }
+            // Write total price and calories at bottom of receipt
             bufWriter.write("--------------------------------------------------------\n");
             bufWriter.write("Total Price: " + customerOrder.getTotalPrice() + "\n");
             bufWriter.write("Total Calories: " + customerOrder.getTotalCalories() + "\n");
@@ -39,16 +47,17 @@ public class OrderWriter {
     }
 
     public static String toString(CustomerOrder customerOrder) {
-
+        // Initialize StringBuilder
         StringBuilder orderString = new StringBuilder();
-
+        // Append number and MenuItem details with forEach loop
         int itemNumber = 1;
         for (MenuItem menuItem : customerOrder.getMenuItems()) {
             orderString.append(itemNumber++)
                     .append(". ")
                     .append(formatOrder(menuItem))
-                    .append("\n");  // add newline after each item
+                    .append("\n");  // Add newline after each item
         }
+        // Add total price and calories at bottom of receipt
         orderString.append("--------------------------------------------------------\n")
                 .append("Total Price: ").append(customerOrder.getTotalPrice()).append("\n")
                 .append("Total Calories: ").append(customerOrder.getTotalCalories()).append("\n");
@@ -57,7 +66,7 @@ public class OrderWriter {
     }
 
     public static String formatOrder(MenuItem menuItem) {
-
+        // Check child class of each MenuItem to have correct title for each toString method
         if (menuItem instanceof SandwichOrder s) {
             return s.toString("SANDWICH");
         } else if (menuItem instanceof Drink d) {
@@ -65,6 +74,7 @@ public class OrderWriter {
         } else if (menuItem instanceof Chips c) {
             return c.toString("CHIPS");
         }
+        // Redundant return statement to appease compiler
         return "";
     }
 }

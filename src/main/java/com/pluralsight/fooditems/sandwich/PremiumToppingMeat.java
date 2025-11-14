@@ -7,7 +7,7 @@ public class PremiumToppingMeat extends SandwichFilling {
     private MeatType meatType;
 
     // Constructor to set the calories value for each premium cheese topping
-    PremiumToppingMeat(MeatType meatType, boolean isExtra) {
+    public PremiumToppingMeat(MeatType meatType, boolean isExtra) {
         this.meatType = meatType;
         this.isExtra = isExtra;
         updateCalories();

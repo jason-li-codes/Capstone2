@@ -7,7 +7,7 @@ public class RegularTopping extends SandwichFilling {
     private RegularToppingType regularToppingType;
 
     // Constructor to set the calories value for each regular topping
-    RegularTopping(RegularToppingType regularToppingType, boolean isExtra) {
+    public RegularTopping(RegularToppingType regularToppingType, boolean isExtra) {
         this.regularToppingType = regularToppingType;
         this.isExtra = isExtra;
         updateCalories();

@@ -1,7 +1,7 @@
 package com.pluralsight.fooditems.sandwich;
 
 import com.pluralsight.fooditems.Calories;
-import com.pluralsight.fooditems.sandwich.swtypes.SauceType;
+import com.pluralsight.fooditems.enums.SauceType;
 
 public class Sauce extends Calories {
 

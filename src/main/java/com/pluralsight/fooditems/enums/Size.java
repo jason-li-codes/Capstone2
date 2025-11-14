@@ -1,4 +1,4 @@
-package com.pluralsight.fooditems;
+package com.pluralsight.fooditems.enums;
 
 public enum Size {
 

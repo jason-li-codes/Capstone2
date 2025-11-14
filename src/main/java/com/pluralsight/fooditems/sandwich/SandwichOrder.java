@@ -1,11 +1,11 @@
 package com.pluralsight.fooditems.sandwich;
 
-import com.pluralsight.fooditems.sandwich.swtypes.CheeseType;
-import com.pluralsight.fooditems.sandwich.swtypes.MeatType;
-import com.pluralsight.fooditems.sandwich.swtypes.RegularToppingType;
+import com.pluralsight.fooditems.enums.CheeseType;
+import com.pluralsight.fooditems.enums.MeatType;
+import com.pluralsight.fooditems.enums.RegularToppingType;
 import com.pluralsight.utilizedclasses.FixedArrayList;
 import com.pluralsight.fooditems.MenuItem;
-import com.pluralsight.fooditems.Size;
+import com.pluralsight.fooditems.enums.Size;
 
 public class SandwichOrder extends MenuItem {
 

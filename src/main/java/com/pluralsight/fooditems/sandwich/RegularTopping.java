@@ -1,6 +1,6 @@
 package com.pluralsight.fooditems.sandwich;
 
-import com.pluralsight.fooditems.sandwich.swtypes.RegularToppingType;
+import com.pluralsight.fooditems.enums.RegularToppingType;
 
 public class RegularTopping extends SandwichFilling {
 

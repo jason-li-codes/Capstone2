@@ -1,4 +1,4 @@
-package com.pluralsight.fooditems.sandwich.swtypes;
+package com.pluralsight.fooditems.enums;
 
 public enum SauceType {
 

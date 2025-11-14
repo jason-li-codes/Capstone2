@@ -1,6 +1,6 @@
 package com.pluralsight.fooditems;
 
-public class MenuItem extends Calories {
+public abstract class MenuItem extends Calories {
 
     protected double price;
 
@@ -8,4 +8,5 @@ public class MenuItem extends Calories {
         return price;
     }
 
+    public abstract String toString(String title);
 }

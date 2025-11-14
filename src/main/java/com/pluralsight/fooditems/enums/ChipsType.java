@@ -1,4 +1,4 @@
-package com.pluralsight.fooditems.addons;
+package com.pluralsight.fooditems.enums;
 
 public enum ChipsType {
 

@@ -1,6 +1,6 @@
-package com.pluralsight.fooditems.addons;
+package com.pluralsight.fooditems;
 
-import com.pluralsight.fooditems.MenuItem;
+import com.pluralsight.fooditems.enums.ChipsType;
 
 public class Chips extends MenuItem {
 

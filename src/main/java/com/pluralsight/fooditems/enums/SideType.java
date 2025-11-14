@@ -1,6 +1,4 @@
-package com.pluralsight.fooditems.sandwich.swtypes;
-
-import com.pluralsight.fooditems.Calories;
+package com.pluralsight.fooditems.enums;
 
 public enum SideType {
 

@@ -1,7 +1,7 @@
 package com.pluralsight.fooditems.sandwich;
 
 import com.pluralsight.fooditems.Calories;
-import com.pluralsight.fooditems.sandwich.swtypes.BreadType;
+import com.pluralsight.fooditems.enums.BreadType;
 
 public class Bread extends Calories {
 

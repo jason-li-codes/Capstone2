@@ -1,7 +1,7 @@
 package com.pluralsight.fooditems.sandwich;
 
 import com.pluralsight.fooditems.Calories;
-import com.pluralsight.fooditems.sandwich.swtypes.SideType;
+import com.pluralsight.fooditems.enums.SideType;
 
 public class Side extends Calories {
 

@@ -1,6 +1,6 @@
 package com.pluralsight.fooditems.sandwich;
 
-import com.pluralsight.fooditems.sandwich.swtypes.MeatType;
+import com.pluralsight.fooditems.enums.MeatType;
 
 public class PremiumToppingMeat extends SandwichFilling {
 

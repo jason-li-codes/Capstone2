@@ -1,7 +1,7 @@
-package com.pluralsight.fooditems.addons;
+package com.pluralsight.fooditems;
 
-import com.pluralsight.fooditems.MenuItem;
-import com.pluralsight.fooditems.Size;
+import com.pluralsight.fooditems.enums.DrinkType;
+import com.pluralsight.fooditems.enums.Size;
 
 public class Drink extends MenuItem {
 

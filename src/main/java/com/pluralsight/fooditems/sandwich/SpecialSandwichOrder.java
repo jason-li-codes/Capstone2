@@ -16,6 +16,11 @@ public class SpecialSandwichOrder extends SandwichOrder {
         configureSandwich(specialSandwich);
     }
 
+    // Getter
+    public String getSandwichName() {
+        return sandwichName;
+    }
+
     // Configure sandwich toppings, meats, cheese, sauces
     private void configureSandwich(String specialSandwich) {
         // Use switch case to create appropriate SandwichOrder with the correct SandwichFilling
@@ -97,12 +102,6 @@ public class SpecialSandwichOrder extends SandwichOrder {
             case "southwest sunrise" -> new Bread(BreadType.WHITE);
             default -> new Bread(BreadType.WHEAT);
         };
-    }
-
-    // Overidden toString method to include sandwichName instead of default title
-    @Override
-    public String toString() {
-        return super.toString(sandwichName);
     }
 
 }

@@ -7,7 +7,6 @@ import java.io.FileWriter;
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -25,7 +24,7 @@ public class OrderWriter {
         try (BufferedWriter bufWriter = new BufferedWriter(new FileWriter(newFileName))) {
             // Write header
             bufWriter.write(currentTime.toString());
-            bufWriter.write("--------------------------------------------------------\n");
+            bufWriter.write("-------------------------------------\n");
             // Write each MenuItem with numbers
             int itemNumber = 1;
             for (MenuItem menuItem : customerOrder.getMenuItems()) {
@@ -33,10 +32,10 @@ public class OrderWriter {
                 bufWriter.write(formatOrder(menuItem));
             }
             // Write total price and calories at bottom of receipt
-            bufWriter.write("--------------------------------------------------------\n");
+            bufWriter.write("-------------------------------------\n");
             bufWriter.write("Total Price: " + customerOrder.getTotalPrice() + "\n");
             bufWriter.write("Total Calories: " + customerOrder.getTotalCalories() + "\n");
-            bufWriter.write("--------------------------------------------------------\n");
+            bufWriter.write("-------------------------------------\n");
             bufWriter.write("Thank you for coming to Delicatessen Delights, please come again!");
             System.out.println("File created successfully.");
         } catch (FileNotFoundException e) { // Handles FileNotFoundException
@@ -58,8 +57,8 @@ public class OrderWriter {
                     .append("\n");  // Add newline after each item
         }
         // Add total price and calories at bottom of receipt
-        orderString.append("--------------------------------------------------------\n")
-                .append("Total Price: ").append(customerOrder.getTotalPrice()).append("\n")
+        orderString.append("-------------------------------------\n")
+                .append("Total Price: ").append(String.format("%.2f", customerOrder.getTotalPrice())).append("\n")
                 .append("Total Calories: ").append(customerOrder.getTotalCalories()).append("\n");
         // Convert to String
         return orderString.toString();
@@ -68,7 +67,11 @@ public class OrderWriter {
     public static String formatOrder(MenuItem menuItem) {
         // Check child class of each MenuItem to have correct title for each toString method
         if (menuItem instanceof SandwichOrder s) {
-            return s.toString("SANDWICH");
+            if (s instanceof SpecialSandwichOrder sp) {
+                return sp.toString(sp.getSandwichName());
+            } else {
+                return s.toString("SANDWICH");
+            }
         } else if (menuItem instanceof Drink d) {
             return d.toString("DRINK");
         } else if (menuItem instanceof Chips c) {

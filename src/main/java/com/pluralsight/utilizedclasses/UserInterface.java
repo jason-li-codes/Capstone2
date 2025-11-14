@@ -1,10 +1,8 @@
 package com.pluralsight.utilizedclasses;
 
-import com.pluralsight.fooditems.Size;
-import com.pluralsight.fooditems.addons.*;
-import com.pluralsight.fooditems.sandwich.Bread;
-import com.pluralsight.fooditems.sandwich.SandwichOrder;
-import com.pluralsight.fooditems.sandwich.swtypes.BreadType;
+import com.pluralsight.fooditems.*;
+import com.pluralsight.fooditems.enums.*;
+import com.pluralsight.fooditems.sandwich.*;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -59,7 +57,7 @@ public class UserInterface {
                     (2) Add a drink
                     (3) Add chips
                     (4) Checkout
-                    (0) Cancel order, return to main menu
+                    (0) Return to main menu
                     """);
             char orderMenuOption = getValidInput(String.class, false).charAt(0);
             switch (orderMenuOption) {
@@ -149,6 +147,13 @@ public class UserInterface {
         }
 
         SandwichOrder currentSandwich = new SandwichOrder(new Bread(breadType), sandwichSize);
+
+        currentSandwich.toString("Current order");
+
+
+
+        isRunning = true;
+
 
 
     }

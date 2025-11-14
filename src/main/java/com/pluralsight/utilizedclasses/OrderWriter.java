@@ -35,6 +35,21 @@ public class OrderWriter {
         }
     }
 
+    public String toString(CustomerOrder customerOrder) {
+
+        StringBuilder orderString = new StringBuilder();
+
+        int itemNumber = 1;
+        for (MenuItem menuItem : customerOrder.getMenuItems()) {
+            orderString.append(itemNumber++)
+                    .append(". ")
+                    .append(formatOrder(menuItem))
+                    .append("\n");  // add newline after each item
+        }
+        // Convert to String
+        return orderString.toString();
+    }
+
     public static String formatOrder(MenuItem menuItem) {
 
         if (menuItem instanceof SandwichOrder s) {

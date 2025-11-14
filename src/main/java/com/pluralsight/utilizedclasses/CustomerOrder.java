@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class CustomerOrder {
 
-    private ArrayList<MenuItem> menuItems;
+    private final ArrayList<MenuItem> menuItems;
 
     public CustomerOrder() {
         this.menuItems = new ArrayList<>();

@@ -4,11 +4,11 @@ public class PrintColumns {
 
     public PrintColumns() {}
 
-    public static void printTwoColumnWindow(String leftBlock, String rightBlock) {
+    public static void TwoColumns(String leftBlock, String rightBlock) {
 
-        int totalWidth = 120;
+        int totalWidth = 180;
 
-        int columnWidth = (totalWidth - 5) / 2; // borders + spacing
+        int columnWidth = (totalWidth - 5) / 3; // borders + spacing
 
         // Clean and split into lines
         String[] leftLines = leftBlock.stripIndent().trim().split("\n");
@@ -25,10 +25,10 @@ public class PrintColumns {
 
         // Main contents
         for (int i = 0; i < maxLines; i++) {
-            String left = (i <= leftPad) ? "" : leftLines[i - leftPad];
-            String right = (i <= rightPad) ? "" : rightLines[i - rightPad];
+            String left = (i < leftPad) ? "" : leftLines[i - leftPad];
+            String right = (i < rightPad) ? "" : rightLines[i - rightPad];
 
-            System.out.printf("║ %-"+columnWidth+"s ║ %-"+columnWidth+"s ║\n",
+            System.out.printf("║ %-"+columnWidth+"s ║ %-"+columnWidth*2+"s ║\n",
                     left, right);
         }
 
@@ -40,7 +40,7 @@ public class PrintColumns {
             System.out.print(left);
             for (int i = 0; i < width + 2; i++) System.out.print(fill);
             System.out.print(mid);
-            for (int i = 0; i < width + 2; i++) System.out.print(fill);
+            for (int i = 0; i < width * 2 + 2; i++) System.out.print(fill);
         if (numColumns == 3) {
             System.out.print(mid);
             for (int i = 0; i < width + 2; i++) System.out.print(fill);

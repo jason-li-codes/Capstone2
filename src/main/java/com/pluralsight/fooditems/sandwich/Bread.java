@@ -8,6 +8,7 @@ public class Bread extends Calories {
     private BreadType breadType;
 
     public Bread(BreadType breadType) {
+        this.breadType = breadType;
         this.calories = switch (breadType) {
             case WHITE -> 100;
             case MULTIGRAIN -> 90;

@@ -4,7 +4,7 @@ import com.pluralsight.fooditems.enums.ChipsType;
 
 public class Chips extends MenuItem {
 
-    private ChipsType chipsType;
+    private final ChipsType chipsType;
 
     public Chips(ChipsType chipsType) {
         this.chipsType = chipsType;
@@ -26,7 +26,7 @@ public class Chips extends MenuItem {
         return title + "\n" +
                 "=====================================\n" +
                 // Add Order Information
-                String.format("Brand: %s\n", getChipsType()) +
+                String.format("Brand: %s\n", getChipsType().name().replace("_", "-")) +
                 // Add Price and Calories
                 "=====================================\n" +
                 String.format("Price: $%.2f\n", getPrice()) +

@@ -58,11 +58,11 @@ public class Drink extends MenuItem {
 
     @Override
     public String toString(String title) {
-        return "                DRINK                \n" +
+        return title + "\n" +
                 "=====================================\n" +
                 // Add Order Information
                 String.format("Size: %s\n", getSize()) +
-                String.format("Brand: %s\n", getDrinkType()) +
+                String.format("Brand: %s\n", getDrinkType().name().replace("_", "-")) +
                 // Add Price and Calories
                 "=====================================\n" +
                 String.format("Price: $%.2f\n", getPrice()) +

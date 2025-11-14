@@ -88,7 +88,7 @@ public class SandwichOrder extends MenuItem {
             updateCalories();
             updatePrice();
         } catch (IllegalArgumentException e) {
-            System.out.println(premiumToppingMeat + " not added, you may only have up to 2 meats in your sandwich.");
+            System.out.println(premiumToppingMeat.getMeatType().name() + " not added, you may only have up to 2 meats in your sandwich.");
         }
     }
 
@@ -98,7 +98,7 @@ public class SandwichOrder extends MenuItem {
             updateCalories();
             updatePrice();
         } catch (IllegalArgumentException e) {
-            System.out.println(premiumToppingCheese + " not added, you may only have up to 2 cheeses in your sandwich.");
+            System.out.println(premiumToppingCheese.getCheeseType().name() + " not added, you may only have up to 2 cheeses in your sandwich.");
         }
     }
 
@@ -107,7 +107,7 @@ public class SandwichOrder extends MenuItem {
             this.regularToppings.add(regularTopping);
             updateCalories();
         } catch (IllegalArgumentException e) {
-            System.out.println(regularTopping + " not added, you may only have up to 5 toppings in your sandwich.");
+            System.out.println(regularTopping.getRegularToppingType().name() + " not added, you may only have up to 5 toppings in your sandwich.");
         }
     }
 
@@ -116,7 +116,7 @@ public class SandwichOrder extends MenuItem {
             this.sauces.add(sauce);
             updateCalories();
         } catch (IllegalArgumentException e) {
-            System.out.println(sauce + " not added, you may only have up to 3 sauces in your sandwich.");
+            System.out.println(sauce.getSauceType().name() + " not added, you may only have up to 3 sauces in your sandwich.");
         }
     }
 
@@ -125,92 +125,8 @@ public class SandwichOrder extends MenuItem {
             this.sides.add(side);
             updateCalories();
         } catch (IllegalArgumentException e) {
-            System.out.println(side + " not added, you may only have up to 2 sides with your sandwich.");
+            System.out.println(side.getSideType().name() + " not added, you may only have up to 2 sides with your sandwich.");
         }
-    }
-
-    public void removeMeat(int index) {
-        try {
-            PremiumToppingMeat thisMeat = this.premiumToppingMeats.getItems().remove(index);
-            System.out.println(thisMeat + " removed.");
-            updateCalories();
-            updatePrice();
-        } catch (Exception e) {
-            System.out.println("Error removing meat: " + e.getMessage());
-        }
-    }
-
-    public void removeCheese(int index) {
-        try {
-            PremiumToppingCheese thisCheese = this.premiumToppingCheeses.getItems().remove(index);
-            System.out.println(thisCheese + " removed.");
-            updateCalories();
-            updatePrice();
-        } catch (Exception e) {
-            System.out.println("Error removing cheese: " + e.getMessage());
-        }
-    }
-
-    public void removeRegularTopping(int index) {
-        try {
-            RegularTopping thisRegularTopping = this.regularToppings.getItems().remove(index);
-            System.out.println(thisRegularTopping + " removed.");
-            updateCalories();
-        } catch (Exception e) {
-            System.out.println("Error removing topping: " + e.getMessage());
-        }
-    }
-
-    public void removeSauce(int index) {
-        try {
-            Sauce thisSauce = this.sauces.getItems().remove(index);
-            System.out.println(thisSauce + " removed.");
-            updateCalories();
-        } catch (Exception e) {
-            System.out.println("Error removing sauce: " + e.getMessage());
-        }
-    }
-
-    public void removeSide(int index) {
-        try {
-            Side thisSide = this.sides.getItems().remove(index);
-            System.out.println(thisSide + " removed.");
-            updateCalories();
-        } catch (Exception e) {
-            System.out.println("Error removing side: " + e.getMessage());
-        }
-    }
-
-    public void updateMeatType(int index, MeatType meatType) {
-        this.premiumToppingMeats.getItems().get(index).setMeatType(meatType);
-        updateCalories();
-    }
-
-    public void updateCheeseType(int index, CheeseType cheeseType) {
-        this.premiumToppingCheeses.getItems().get(index).setCheeseType(cheeseType);
-        updateCalories();
-    }
-
-    public void updateRegularToppingType(int index, RegularToppingType RegularToppingType) {
-        this.regularToppings.getItems().get(index).setRegularToppingType(RegularToppingType);
-        updateCalories();
-    }
-
-    public void updateMeatExtra(int index, boolean isExtra) {
-        this.premiumToppingMeats.getItems().get(index).setExtra(isExtra);
-        updateCalories();
-        updatePrice();
-    }
-
-    public void updateCheeseExtra(int index, boolean isExtra) {
-        this.premiumToppingCheeses.getItems().get(index).setExtra(isExtra);
-        updateCalories();
-        updatePrice();
-    }
-
-    public void updateRegularToppingExtra(int index, boolean isExtra) {
-        this.regularToppings.getItems().get(index).setExtra(isExtra);
-        updateCalories();
     }
 
     public void updatePrice() {
@@ -299,15 +215,15 @@ public class SandwichOrder extends MenuItem {
         receiptLine.append(title).append("\n")
                 .append("=====================================\n");
         // Add basic order information
-        receiptLine.append(String.format("Size: %s\n", getSize()));
-        receiptLine.append(String.format("Bread: %s\n", getBread().getBreadType()));
+        receiptLine.append(String.format("Size: %s\n", getSize().name()));
+        receiptLine.append(String.format("Bread: %s\n", getBread().getBreadType().name()));
         // Add Toasting Option
         receiptLine.append("Toasted: ").append(isToasted() ? "Yes" : "No").append("\n");
         // Add Meats
         if (!getPremiumToppingMeats().getItems().isEmpty()) {
             receiptLine.append("Meats:\n");
             for (PremiumToppingMeat meat : getPremiumToppingMeats().getItems()) {
-                receiptLine.append(" - ").append(meat.getMeatType()).append(" (")
+                receiptLine.append(" - ").append(meat.getMeatType().name()).append(" (")
                         .append(meat.isExtra() ? "Extra" : "Regular").append(")\n");
             }
         } else {
@@ -317,7 +233,7 @@ public class SandwichOrder extends MenuItem {
         if (!getPremiumToppingCheeses().getItems().isEmpty()) {
             receiptLine.append("Cheeses:\n");
             for (PremiumToppingCheese cheese : getPremiumToppingCheeses().getItems()) {
-                receiptLine.append(" - ").append(cheese.getCheeseType()).append(" (")
+                receiptLine.append(" - ").append(cheese.getCheeseType().name()).append(" (")
                         .append(cheese.isExtra() ? "Extra" : "Regular").append(")\n");
             }
         } else {
@@ -327,7 +243,8 @@ public class SandwichOrder extends MenuItem {
         if (!getRegularToppings().getItems().isEmpty()) {
             receiptLine.append("Toppings:\n");
             for (RegularTopping topping : getRegularToppings().getItems()) {
-                receiptLine.append(" - ").append(topping.getRegularToppingType()).append("\n");
+                receiptLine.append(" - ").append(topping.getRegularToppingType().name()).append(" (")
+                        .append(topping.isExtra() ? "Extra" : "Regular").append(")\n");
             }
         } else {
             receiptLine.append("No toppings selected.\n");
@@ -336,7 +253,7 @@ public class SandwichOrder extends MenuItem {
         if (!getSauces().getItems().isEmpty()) {
             receiptLine.append("Sauces:\n");
             for (Sauce sauce : getSauces().getItems()) {
-                receiptLine.append(" - ").append(sauce.getSauceType()).append("\n");
+                receiptLine.append(" - ").append(sauce.getSauceType().name()).append("\n");
             }
         } else {
             receiptLine.append("No sauces selected.\n");
@@ -345,7 +262,7 @@ public class SandwichOrder extends MenuItem {
         if (!getSides().getItems().isEmpty()) {
             receiptLine.append("Sides:\n");
             for (Side side : getSides().getItems()) {
-                receiptLine.append("  - ").append(side.getSideType()).append("\n");
+                receiptLine.append("  - ").append(side.getSideType().name()).append("\n");
             }
         } else {
             receiptLine.append("No sides selected.\n");

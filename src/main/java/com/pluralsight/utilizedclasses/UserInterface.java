@@ -10,12 +10,10 @@ import java.util.Scanner;
 public class UserInterface {
 
     private static CustomerOrder customerOrder;
-    private static ArrayList<CustomerOrder> oldOrders;
     private static Scanner input;
 
     private void init() {
         customerOrder = new CustomerOrder();
-        oldOrders = new ArrayList<>();
         input = new Scanner(System.in);
     }
 
@@ -32,10 +30,10 @@ public class UserInterface {
                     (0) Exit
                     """);
 
-            char mainMenuOption = getValidInput(String.class, false).charAt(0);
+            char mainMenuOption = getValidInput(String.class).charAt(0);
             switch (mainMenuOption) {
                 case '1' -> orderMenu();
-                case '2' -> previousOrdersMenu();
+                // case '2' -> previousOrdersMenu();
                 case '0' -> {
                     System.out.println("EXITING....");
                     input.close();
@@ -57,7 +55,7 @@ public class UserInterface {
                     (4) Checkout
                     (0) Return to main menu
                     """);
-            char orderMenuOption = getValidInput(String.class, false).charAt(0);
+            char orderMenuOption = getValidInput(String.class).charAt(0);
             switch (orderMenuOption) {
                 case '1' -> addSandwich();
                 case '2' -> addDrink();
@@ -78,8 +76,7 @@ public class UserInterface {
 
         int itemNumber = 1;
         for (MenuItem menuItem : customerOrder.getMenuItems()) {
-            System.out.println(itemNumber + ". ");
-            System.out.println(OrderWriter.formatOrder(menuItem));
+            System.out.println(itemNumber++ + ". " + OrderWriter.formatOrder(menuItem));
         }
 
         while (true) {
@@ -87,28 +84,21 @@ public class UserInterface {
                     Would you like to checkout?
                     (1) Yes, checkout
                     (2) No, I want to remove an item
-                    (3) No, I want to change an item
-                    (4) Return to previous menu
+                    (3) Return to previous menu
                     """);
-            char checkoutMenuOption = getValidInput(String.class, false).charAt(0);
+            char checkoutMenuOption = getValidInput(String.class).charAt(0);
             switch (checkoutMenuOption) {
                 case '1' -> {
                     checkout();
                     return;
                 }
                 case '2' -> checkoutRemoveMenu();
-                case '3' -> checkoutUpdateMenu();
-                case '4' -> {
+                case '3' -> {
                     return;
                 }
                 default -> System.out.println("Invalid menu option, please try again.");
             }
         }
-    }
-
-    private static void checkoutUpdateMenu() {
-
-
     }
 
     private static void checkoutRemoveMenu() {
@@ -119,7 +109,7 @@ public class UserInterface {
             System.out.println(OrderWriter.formatOrder(menuItem));
         }
         System.out.println("Which number item would you like to remove?");
-        int removeItemNum = getValidInput(Integer.class, false);
+        int removeItemNum = getValidInput(Integer.class);
         if (removeItemNum < 0 || removeItemNum > customerOrder.getMenuItems().size()) {
             System.out.println("Sorry, I don't see that number on the order.");
         } else {
@@ -137,26 +127,24 @@ public class UserInterface {
 
     private static void addSandwich() {
 
+        while (true) {
         System.out.println("""
                 What kind of sandwich would you like?
-                (1) Specials
-                (2) Custom
-                (0) Return to previous menu
+                (S) Specials
+                (C) Custom
+                (X) Return to previous menu
                 """);
-        boolean isRunning = true;
-        while (isRunning) {
-            char sandwichMenuOption = getValidInput(String.class, false).charAt(0);
+            char sandwichMenuOption = getValidInput(String.class).charAt(0);
             switch (sandwichMenuOption) {
-                case '1' -> specialsMenu();
-                case '2' -> buildSandwich();
-                case '0' -> {
+                case 's' -> specialsMenu();
+                case 'c' -> buildSandwich();
+                case 'x' -> {
                     System.out.println("Returning to previous menu....");
                     return;
                 }
                 default -> System.out.println("Invalid menu option, please try again.");
             }
         }
-
     }
 
     private static void specialsMenu() {
@@ -172,7 +160,7 @@ public class UserInterface {
                     (6) Mediterranean Delight
                     (0) Return to previous menu
                     """);
-            char specialsMenuOption = getValidInput(String.class, false).charAt(0);
+            char specialsMenuOption = getValidInput(String.class).charAt(0);
             boolean isRunning = true;
             while (isRunning) {
                 switch (specialsMenuOption) {
@@ -214,10 +202,10 @@ public class UserInterface {
                         (Y) Yes
                         (N) No, return to previous menu
                         """);
-                char addSpecialOption = getValidInput(String.class, false).charAt(0);
+                char addSpecialOption = getValidInput(String.class).charAt(0);
                 switch (addSpecialOption) {
-                    case 'Y' -> isRunning = false;
-                    case 'N' -> {
+                    case 'y' -> isRunning = false;
+                    case 'n' -> {
                         return;
                     }
                     default -> System.out.println("Invalid menu option, please try again.");
@@ -238,7 +226,7 @@ public class UserInterface {
         Size sandwichSize = null;
         boolean isRunning = true;
         while (isRunning) {
-            char addSandwichMenuOption = getValidInput(String.class, false).charAt(0);
+            char addSandwichMenuOption = getValidInput(String.class).charAt(0);
             switch (addSandwichMenuOption) {
                 case 's' -> {
                     sandwichSize = Size.SMALL;
@@ -270,7 +258,7 @@ public class UserInterface {
         BreadType breadType = null;
         isRunning = true;
         while (isRunning) {
-            char chooseBreadMenuOption = getValidInput(String.class, false).charAt(0);
+            char chooseBreadMenuOption = getValidInput(String.class).charAt(0);
             switch (chooseBreadMenuOption) {
                 case '1' -> {
                     breadType = BreadType.WHITE;
@@ -297,31 +285,32 @@ public class UserInterface {
         }
         SandwichOrder currentSandwich = new SandwichOrder(new Bread(breadType), sandwichSize);
 
-        addSandwichMeat(currentSandwich);
-        addSandwichCheese(currentSandwich);
-        addSandwichToppings(currentSandwich);
-        addSandwichSauces(currentSandwich);
-        addSandwichSides(currentSandwich);
-
         isRunning = true;
         while (isRunning) {
             System.out.println("""
                     Would you like your sandwich toasted?
                     (Y) Yes
                     (N) No""");
-            char chooseToastedOption = getValidInput(String.class, false).charAt(0);
+            char chooseToastedOption = getValidInput(String.class).charAt(0);
             switch (chooseToastedOption) {
-                case 'Y' -> {
+                case 'y' -> {
                     currentSandwich.setToasted(true);
                     isRunning = false;
                 }
-                case 'N' -> {
+                case 'n' -> {
                     currentSandwich.setToasted(false);
                     isRunning = false;
                 }
                 default -> System.out.println("Invalid menu option, please try again.");
             }
         }
+
+        addSandwichMeat(currentSandwich);
+        addSandwichCheese(currentSandwich);
+        addSandwichToppings(currentSandwich);
+        addSandwichSauces(currentSandwich);
+        addSandwichSides(currentSandwich);
+
         System.out.println("Sandwich successfully added to your order.");
     }
 
@@ -343,7 +332,7 @@ public class UserInterface {
                         (0) None
                     """);
             while (isRunning) {
-                char chooseMeatMenuOption = getValidInput(String.class, false).charAt(0);
+                char chooseMeatMenuOption = getValidInput(String.class).charAt(0);
                 switch (chooseMeatMenuOption) {
                     case '1' -> {
                         meatType = MeatType.TURKEY;
@@ -383,13 +372,13 @@ public class UserInterface {
                         (Y) Yes
                         (N) No
                         """);
-                char chooseMeatExtraOption = getValidInput(String.class, false).charAt(0);
+                char chooseMeatExtraOption = getValidInput(String.class).charAt(0);
                 switch (chooseMeatExtraOption) {
-                    case 'Y' -> {
+                    case 'y' -> {
                         isExtra = true;
                         isRunning = false;
                     }
-                    case 'N' -> isRunning = false;
+                    case 'n' -> isRunning = false;
                     default -> System.out.println("Invalid menu option, please try again.");
                 }
             }
@@ -401,10 +390,10 @@ public class UserInterface {
                     """);
             isRunning = true;
             while (isRunning) {
-                char chooseAnotherMeatOption = getValidInput(String.class, false).charAt(0);
+                char chooseAnotherMeatOption = getValidInput(String.class).charAt(0);
                 switch (chooseAnotherMeatOption) {
-                    case 'Y' -> isRunning = false;
-                    case 'N' -> {
+                    case 'y' -> isRunning = false;
+                    case 'n' -> {
                         return;
                     }
                     default -> System.out.println("Invalid menu option, please try again.");
@@ -430,7 +419,7 @@ public class UserInterface {
                     """);
             // Select cheese
             while (isRunning) {
-                char chooseCheeseMenuOption = getValidInput(String.class, false).charAt(0);
+                char chooseCheeseMenuOption = getValidInput(String.class).charAt(0);
                 switch (chooseCheeseMenuOption) {
                     case '1' -> {
                         cheeseType = CheeseType.AMERICAN;
@@ -463,13 +452,13 @@ public class UserInterface {
                         (Y) Yes
                         (N) No
                         """);
-                char chooseCheeseExtraOption = getValidInput(String.class, false).charAt(0);
+                char chooseCheeseExtraOption = getValidInput(String.class).charAt(0);
                 switch (chooseCheeseExtraOption) {
-                    case 'Y' -> {
+                    case 'y' -> {
                         isExtra = true;
                         isRunning = false;
                     }
-                    case 'N' -> isRunning = false;
+                    case 'n' -> isRunning = false;
                     default -> System.out.println("Invalid menu option, please try again.");
                 }
             }
@@ -483,10 +472,10 @@ public class UserInterface {
                     """);
             isRunning = true;
             while (isRunning) {
-                char chooseAnotherCheeseOption = getValidInput(String.class, false).charAt(0);
+                char chooseAnotherCheeseOption = getValidInput(String.class).charAt(0);
                 switch (chooseAnotherCheeseOption) {
-                    case 'Y' -> isRunning = false; // loop adds another
-                    case 'N' -> {
+                    case 'y' -> isRunning = false; // loop adds another
+                    case 'n' -> {
                         return; // done with cheese selection
                     }
                     default -> System.out.println("Invalid menu option, please try again.");
@@ -518,7 +507,7 @@ public class UserInterface {
                     """);
             // Select topping
             while (isRunning) {
-                char chooseToppingMenuOption = getValidInput(String.class, false).charAt(0);
+                char chooseToppingMenuOption = getValidInput(String.class).charAt(0);
                 switch (chooseToppingMenuOption) {
                     case '1' -> {
                         toppingType = RegularToppingType.LETTUCE;
@@ -571,13 +560,13 @@ public class UserInterface {
                         (Y) Yes
                         (N) No
                         """);
-                char chooseToppingExtraOption = getValidInput(String.class, false).charAt(0);
+                char chooseToppingExtraOption = getValidInput(String.class).charAt(0);
                 switch (chooseToppingExtraOption) {
-                    case 'Y' -> {
+                    case 'y' -> {
                         isExtra = true;
                         isRunning = false;
                     }
-                    case 'N' -> isRunning = false;
+                    case 'n' -> isRunning = false;
                     default -> System.out.println("Invalid menu option, please try again.");
                 }
             }
@@ -591,10 +580,10 @@ public class UserInterface {
                     """);
             isRunning = true;
             while (isRunning) {
-                char chooseAnotherToppingOption = getValidInput(String.class, false).charAt(0);
+                char chooseAnotherToppingOption = getValidInput(String.class).charAt(0);
                 switch (chooseAnotherToppingOption) {
-                    case 'Y' -> isRunning = false; // loop continues
-                    case 'N' -> {
+                    case 'y' -> isRunning = false; // loop continues
+                    case 'n' -> {
                         return; // done adding toppings
                     }
                     default -> System.out.println("Invalid menu option, please try again.");
@@ -621,7 +610,7 @@ public class UserInterface {
                     """);
             // Select sauce
             while (isRunning) {
-                char chooseSauceOption = getValidInput(String.class, false).charAt(0);
+                char chooseSauceOption = getValidInput(String.class).charAt(0);
                 switch (chooseSauceOption) {
                     case '1' -> {
                         sauceType = SauceType.MAYO;
@@ -663,10 +652,10 @@ public class UserInterface {
                     """);
             isRunning = true;
             while (isRunning) {
-                char chooseAnotherSauceOption = getValidInput(String.class, false).charAt(0);
+                char chooseAnotherSauceOption = getValidInput(String.class).charAt(0);
                 switch (chooseAnotherSauceOption) {
-                    case 'Y' -> isRunning = false; // continue loop
-                    case 'N' -> {
+                    case 'y' -> isRunning = false; // continue loop
+                    case 'n' -> {
                         return; // done adding sauces
                     }
                     default -> System.out.println("Invalid menu option, please try again.");
@@ -690,7 +679,7 @@ public class UserInterface {
                     """);
             // Select side
             while (isRunning) {
-                char chooseSideOption = getValidInput(String.class, false).charAt(0);
+                char chooseSideOption = getValidInput(String.class).charAt(0);
                 switch (chooseSideOption) {
                     case '1' -> {
                         sideType = SideType.PICKLES;
@@ -717,10 +706,10 @@ public class UserInterface {
                     """);
             isRunning = true;
             while (isRunning) {
-                char chooseAnotherSideOption = getValidInput(String.class, false).charAt(0);
+                char chooseAnotherSideOption = getValidInput(String.class).charAt(0);
                 switch (chooseAnotherSideOption) {
-                    case 'Y' -> isRunning = false; // loop again
-                    case 'N' -> {
+                    case 'y' -> isRunning = false; // loop again
+                    case 'n' -> {
                         return; // finish
                     }
                     default -> System.out.println("Invalid menu option, please try again.");
@@ -741,7 +730,7 @@ public class UserInterface {
         Size drinkSize = null;
         boolean isRunning = true;
         while (isRunning) {
-            char addSandwichMenuOption = getValidInput(String.class, false).charAt(0);
+            char addSandwichMenuOption = getValidInput(String.class).charAt(0);
             switch (addSandwichMenuOption) {
                 case 's' -> {
                     drinkSize = Size.SMALL;
@@ -774,7 +763,7 @@ public class UserInterface {
         DrinkType drinkType = null;
         isRunning = true;
         while (isRunning) {
-            char chooseBreadMenuOption = getValidInput(String.class, false).charAt(0);
+            char chooseBreadMenuOption = getValidInput(String.class).charAt(0);
             switch (chooseBreadMenuOption) {
                 case '1' -> {
                     drinkType = DrinkType.KO_KUH;
@@ -823,7 +812,7 @@ public class UserInterface {
         boolean isRunning = true;
         while (isRunning) {
             // Get valid user input (assuming `getValidInput` method or equivalent is present)
-            char chooseChipsMenuOption = getValidInput(String.class, false).charAt(0);
+            char chooseChipsMenuOption = getValidInput(String.class).charAt(0);
             switch (chooseChipsMenuOption) {
                 case '1' -> {
                     chipsType = ChipsType.PO_TAY_TOHZ;
@@ -855,7 +844,9 @@ public class UserInterface {
         customerOrder.getMenuItems().add(new Chips(chipsType));
     }
 
-    private static <T> T getValidInput(Class<T> type, boolean allowNull) {
+    private static <T> T getValidInput(Class<T> type) {
+
+        boolean allowNull = false;
 
         String userInput;
         T parsedValue = null;
@@ -887,6 +878,5 @@ public class UserInterface {
             }
         }
     }
-
 
 }

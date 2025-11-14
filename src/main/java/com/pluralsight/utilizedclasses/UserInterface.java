@@ -27,17 +27,15 @@ public class UserInterface {
             System.out.println("""
                     Welcome to DELI-catessen DELI-ght!
                     ======================MAIN MENU======================
-                    (1) Look at menu
-                    (2) Start new order
-                    (3) See previous orders
+                    (1) Start new order
+                    (2) See previous orders
                     (0) Exit
                     """);
 
             char mainMenuOption = getValidInput(String.class, false).charAt(0);
             switch (mainMenuOption) {
-                case '1' -> viewMenu();
-                case '2' -> orderMenu();
-                case '3' -> previousOrdersMenu();
+                case '1' -> orderMenu();
+                case '2' -> previousOrdersMenu();
                 case '0' -> {
                     System.out.println("EXITING....");
                     input.close();
@@ -61,10 +59,10 @@ public class UserInterface {
                     """);
             char orderMenuOption = getValidInput(String.class, false).charAt(0);
             switch (orderMenuOption) {
-                case '1' -> beginSandwich();
+                case '1' -> addSandwich();
                 case '2' -> addDrink();
                 case '3' -> addChips();
-                case '4' -> checkout();
+                case '4' -> checkoutMenu();
                 case '0' -> {
                     customerOrder.getMenuItems().clear();
                     System.out.println("Returning to main menu....");
@@ -76,14 +74,166 @@ public class UserInterface {
 
     }
 
-    public static void beginSandwich() {
+    private static void checkoutMenu() {
+
+        int itemNumber = 1;
+        for (MenuItem menuItem : customerOrder.getMenuItems()) {
+            System.out.println(itemNumber + ". ");
+            System.out.println(OrderWriter.formatOrder(menuItem));
+        }
+
+        while (true) {
+            System.out.println("""
+                    Would you like to checkout?
+                    (1) Yes, checkout
+                    (2) No, I want to remove an item
+                    (3) No, I want to change an item
+                    (4) Return to previous menu
+                    """);
+            char checkoutMenuOption = getValidInput(String.class, false).charAt(0);
+            switch (checkoutMenuOption) {
+                case '1' -> {
+                    checkout();
+                    return;
+                }
+                case '2' -> checkoutRemoveMenu();
+                case '3' -> checkoutUpdateMenu();
+                case '4' -> {
+                    return;
+                }
+                default -> System.out.println("Invalid menu option, please try again.");
+            }
+        }
+    }
+
+    private static void checkoutUpdateMenu() {
+
+
+    }
+
+    private static void checkoutRemoveMenu() {
+
+        int itemNumber = 1;
+        for (MenuItem menuItem : customerOrder.getMenuItems()) {
+            System.out.println(itemNumber + ". ");
+            System.out.println(OrderWriter.formatOrder(menuItem));
+        }
+        System.out.println("Which number item would you like to remove?");
+        int removeItemNum = getValidInput(Integer.class, false);
+        if (removeItemNum < 0 || removeItemNum > customerOrder.getMenuItems().size()) {
+            System.out.println("Sorry, I don't see that number on the order.");
+        } else {
+            customerOrder.getMenuItems().remove(removeItemNum - 1);
+            System.out.println("Item successfully removed.");
+        }
+    }
+
+    private static void checkout() {
+
+        OrderWriter.writeReceipt(customerOrder);
+        System.out.println("Your receipt has been printed. Thank you for coming to Delicatessen Delights, please come again!");
+        customerOrder.getMenuItems().clear();
+    }
+
+    private static void addSandwich() {
+
+        System.out.println("""
+                What kind of sandwich would you like?
+                (1) Specials
+                (2) Custom
+                (0) Return to previous menu
+                """);
+        boolean isRunning = true;
+        while (isRunning) {
+            char sandwichMenuOption = getValidInput(String.class, false).charAt(0);
+            switch (sandwichMenuOption) {
+                case '1' -> specialsMenu();
+                case '2' -> buildSandwich();
+                case '0' -> {
+                    System.out.println("Returning to previous menu....");
+                    return;
+                }
+                default -> System.out.println("Invalid menu option, please try again.");
+            }
+        }
+
+    }
+
+    private static void specialsMenu() {
+
+        while (true) {
+            System.out.println("""
+                    Specials Menu
+                    (1) Green Mountain Melt
+                    (2) Smokehouse Stack
+                    (3) Southwest Sunrise
+                    (4) Pastrami King
+                    (5) Garden Delight
+                    (6) Mediterranean Delight
+                    (0) Return to previous menu
+                    """);
+            char specialsMenuOption = getValidInput(String.class, false).charAt(0);
+            boolean isRunning = true;
+            while (isRunning) {
+                switch (specialsMenuOption) {
+                    case '1' -> {
+                        customerOrder.getMenuItems().add(new SpecialSandwichOrder("green mountain melt"));
+                        isRunning = false;
+                    }
+                    case '2' -> {
+                        customerOrder.getMenuItems().add(new SpecialSandwichOrder("smokehouse stack"));
+                        isRunning = false;
+                    }
+                    case '3' -> {
+                        customerOrder.getMenuItems().add(new SpecialSandwichOrder("southwest sunrise"));
+                        isRunning = false;
+                    }
+                    case '4' -> {
+                        customerOrder.getMenuItems().add(new SpecialSandwichOrder("pastrami king"));
+                        isRunning = false;
+                    }
+                    case '5' -> {
+                        customerOrder.getMenuItems().add(new SpecialSandwichOrder("garden delight"));
+                        isRunning = false;
+                    }
+                    case '6' -> {
+                        customerOrder.getMenuItems().add(new SpecialSandwichOrder("mediterranean delight"));
+                        isRunning = false;
+                    }
+                    case '0' -> {
+                        System.out.println("Returning to previous menu....");
+                        return;
+                    }
+                    default -> System.out.println("Invalid menu option, please try again.");
+                }
+            }
+            isRunning = true;
+            while (isRunning) {
+                System.out.println("""
+                        Would you like to add another special?
+                        (Y) Yes
+                        (N) No, return to previous menu
+                        """);
+                char addSpecialOption = getValidInput(String.class, false).charAt(0);
+                switch (addSpecialOption) {
+                    case 'Y' -> isRunning = false;
+                    case 'N' -> {
+                        return;
+                    }
+                    default -> System.out.println("Invalid menu option, please try again.");
+                }
+            }
+        }
+    }
+
+    private static void buildSandwich() {
 
         System.out.println("""
                 What size of sandwich would you like?
                 (S) Small
                 (M) Medium
                 (L) Large
-                (0) Cancel sandwich order
+                (X) Cancel sandwich order
                 """);
         Size sandwichSize = null;
         boolean isRunning = true;
@@ -102,7 +252,7 @@ public class UserInterface {
                     sandwichSize = Size.LARGE;
                     isRunning = false;
                 }
-                case '0' -> {
+                case 'X' -> {
                     System.out.println("Returning to previous menu....");
                     return;
                 }
@@ -152,14 +302,35 @@ public class UserInterface {
         addSandwichToppings(currentSandwich);
         addSandwichSauces(currentSandwich);
         addSandwichSides(currentSandwich);
+
+        isRunning = true;
+        while (isRunning) {
+            System.out.println("""
+                    Would you like your sandwich toasted?
+                    (Y) Yes
+                    (N) No""");
+            char chooseToastedOption = getValidInput(String.class, false).charAt(0);
+            switch (chooseToastedOption) {
+                case 'Y' -> {
+                    currentSandwich.setToasted(true);
+                    isRunning = false;
+                }
+                case 'N' -> {
+                    currentSandwich.setToasted(false);
+                    isRunning = false;
+                }
+                default -> System.out.println("Invalid menu option, please try again.");
+            }
+        }
+        System.out.println("Sandwich successfully added to your order.");
     }
 
     private static void addSandwichMeat(SandwichOrder currentSandwich) {
 
         System.out.println(currentSandwich.toString("Current order:"));
 
-        boolean isRunning = true;
-        while (isRunning) {
+        while (true) {
+            boolean isRunning = true;
             MeatType meatType = null;
             System.out.println("""
                     What meat would you like to add to your sandwich?
@@ -239,7 +410,6 @@ public class UserInterface {
                     default -> System.out.println("Invalid menu option, please try again.");
                 }
             }
-            isRunning = true;
         }
     }
 
@@ -247,8 +417,8 @@ public class UserInterface {
 
         System.out.println(currentSandwich.toString("Current order:"));
 
-        boolean isRunning = true;
-        while (isRunning) {
+        while (true) {
+            boolean isRunning = true;
             CheeseType cheeseType = null;
             System.out.println("""
                     What cheese would you like to add to your sandwich?
@@ -322,7 +492,6 @@ public class UserInterface {
                     default -> System.out.println("Invalid menu option, please try again.");
                 }
             }
-            isRunning = true;
         }
     }
 
@@ -330,8 +499,8 @@ public class UserInterface {
 
         System.out.println(currentSandwich.toString("Current order:"));
 
-        boolean isRunning = true;
-        while (isRunning) {
+        while (true) {
+            boolean isRunning = true;
             RegularToppingType toppingType = null;
 
             System.out.println("""
@@ -431,15 +600,14 @@ public class UserInterface {
                     default -> System.out.println("Invalid menu option, please try again.");
                 }
             }
-            isRunning = true;
         }
     }
 
     private static void addSandwichSauces(SandwichOrder currentSandwich) {
 
         System.out.println(currentSandwich.toString("Current order:"));
-        boolean isRunning = true;
-        while (isRunning) {
+        while (true) {
+            boolean isRunning = true;
             SauceType sauceType = null;
             System.out.println("""
                     What sauce would you like to add to your sandwich?
@@ -504,7 +672,6 @@ public class UserInterface {
                     default -> System.out.println("Invalid menu option, please try again.");
                 }
             }
-            isRunning = true;
         }
     }
 
@@ -512,15 +679,15 @@ public class UserInterface {
 
         System.out.println(currentSandwich.toString("Current order:"));
 
-        boolean isRunning = true;
-        while (isRunning) {
+        while (true) {
+            boolean isRunning = true;
             SideType sideType = null;
             System.out.println("""
-                What side would you like to add?
-                    (1) Pickles
-                    (2) Fries
-                    (0) None
-                """);
+                    What side would you like to add?
+                        (1) Pickles
+                        (2) Fries
+                        (0) None
+                    """);
             // Select side
             while (isRunning) {
                 char chooseSideOption = getValidInput(String.class, false).charAt(0);
@@ -544,10 +711,10 @@ public class UserInterface {
             currentSandwich.addSide(new Side(sideType));
             // Ask if they want another
             System.out.println("""
-                Would you like to add another side?
-                (Y) Yes
-                (N) No
-                """);
+                    Would you like to add another side?
+                    (Y) Yes
+                    (N) No
+                    """);
             isRunning = true;
             while (isRunning) {
                 char chooseAnotherSideOption = getValidInput(String.class, false).charAt(0);
@@ -559,7 +726,6 @@ public class UserInterface {
                     default -> System.out.println("Invalid menu option, please try again.");
                 }
             }
-            isRunning = true;
         }
     }
 

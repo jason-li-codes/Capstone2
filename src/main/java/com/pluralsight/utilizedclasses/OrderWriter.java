@@ -38,11 +38,11 @@ public class OrderWriter {
     public static String formatOrder(MenuItem menuItem) {
 
         if (menuItem instanceof SandwichOrder s) {
-            s.toString("SANDWICH");
+            return s.toString("SANDWICH");
         } else if (menuItem instanceof Drink d) {
-            d.toString("DRINK");
+            return d.toString("DRINK");
         } else if (menuItem instanceof Chips c) {
-            c.toString("CHIPS");
+            return c.toString("CHIPS");
         }
         return "";
     }

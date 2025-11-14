@@ -74,70 +74,6 @@ public class UserInterface {
 
     }
 
-    private static void checkoutMenu() {
-
-        while (true) {
-            // Print checkout menu
-            PrintColumns.twoColumns("""
-                    Would you like to checkout?
-                    (1) Yes, checkout
-                    (2) No, I want to remove an item
-                    (3) Return to previous menu
-                    """, OrderWriter.toString(customerOrder));
-            // Get first character of user input
-            char checkoutMenuOption = getValidInput(String.class).charAt(0);
-            switch (checkoutMenuOption) {
-                case '1' -> {
-                    checkout(); // Call checkout method
-                    return;
-                }
-                case '2' -> checkoutRemoveMenu(); // Call checkoutRemoveMenu method
-                case '3' -> {
-                    return;
-                }
-                default -> System.out.println("Invalid menu option, please try again.");
-            }
-        }
-    }
-
-    private static void checkoutRemoveMenu() {
-
-        while (true) {
-            // Print options
-            PrintColumns.twoColumns("""
-                    Which number item would you like to remove?
-                    Or, press (0) to return to previous menu
-                    """, OrderWriter.toString(customerOrder));
-            // Get integer from user
-            int removeItemNum = getValidInput(Integer.class);
-            // If integer is invalid, reprompt
-            if (removeItemNum < 0 || removeItemNum > customerOrder.getMenuItems().size()) {
-                System.out.println("Sorry, I don't see that number on the order.");
-                // If integer is 0, exit
-            } else if (removeItemNum == 0) {
-                return;
-                // Otherwise, remove appropriate MenuItem by using index
-            } else {
-                customerOrder.getMenuItems().remove(removeItemNum - 1);
-                System.out.println("Item successfully removed.");
-            }
-        }
-    }
-
-    private static void checkout() {
-        // Call writeReceipt static method
-        OrderWriter.writeReceipt(customerOrder);
-        // Print receipt and thank you message
-        PrintColumns.twoColumns("""
-                Your receipt has been printed.
-                Thank you for coming to Delicatessen Delights, please come again!
-                """, OrderWriter.toString(customerOrder));
-        // Clear customerOrder
-        customerOrder.getMenuItems().clear();
-        input.close(); // Close scanner
-        System.exit(0); // Exit program
-    }
-
     private static void addSandwich() {
 
         while (true) {
@@ -158,79 +94,6 @@ public class UserInterface {
                     return;
                 }
                 default -> System.out.println("Invalid menu option, please try again.");
-            }
-        }
-    }
-
-
-    private static void specialsMenu() {
-
-        while (true) {
-            // Print options
-            PrintColumns.twoColumns("""
-                    Which special would you like?
-                    (1) Green Mountain Melt
-                    (2) Smokehouse Stack
-                    (3) Southwest Sunrise
-                    (4) Pastrami King
-                    (5) Garden Delight
-                    (6) Mediterranean Delight
-                    (0) Return to previous menu
-                    """, PrintMenu.specialsMenu());
-            // Get first character of user input
-            char specialsMenuOption = getValidInput(String.class).charAt(0);
-            boolean isRunning = true;
-            while (isRunning) {
-                // Create correct SpecialSandwichOrder based on user input
-                switch (specialsMenuOption) {
-                    case '1' -> {
-                        customerOrder.getMenuItems().add(new SpecialSandwichOrder("green mountain melt"));
-                        isRunning = false;
-                    }
-                    case '2' -> {
-                        customerOrder.getMenuItems().add(new SpecialSandwichOrder("smokehouse stack"));
-                        isRunning = false;
-                    }
-                    case '3' -> {
-                        customerOrder.getMenuItems().add(new SpecialSandwichOrder("southwest sunrise"));
-                        isRunning = false;
-                    }
-                    case '4' -> {
-                        customerOrder.getMenuItems().add(new SpecialSandwichOrder("pastrami king"));
-                        isRunning = false;
-                    }
-                    case '5' -> {
-                        customerOrder.getMenuItems().add(new SpecialSandwichOrder("garden delight"));
-                        isRunning = false;
-                    }
-                    case '6' -> {
-                        customerOrder.getMenuItems().add(new SpecialSandwichOrder("mediterranean delight"));
-                        isRunning = false;
-                    }
-                    case '0' -> {
-                        System.out.println("Returning to previous menu....");
-                        return;
-                    }
-                    default -> System.out.println("Invalid menu option, please try again.");
-                }
-            }
-            isRunning = true;
-            while (isRunning) {
-                // Print options
-                PrintColumns.twoColumns("""
-                        Would you like to add another special?
-                        (Y) Yes
-                        (N) No, return to previous menu
-                        """, PrintMenu.specialsMenu());
-                // Get first character of user input
-                char addSpecialOption = getValidInput(String.class).charAt(0);
-                switch (addSpecialOption) {
-                    case 'y' -> isRunning = false; // End while loops
-                    case 'n' -> {
-                        return; // Exit method
-                    }
-                    default -> System.out.println("Invalid menu option, please try again.");
-                }
             }
         }
     }
@@ -759,6 +622,78 @@ public class UserInterface {
         }
     }
 
+    private static void specialsMenu() {
+
+        while (true) {
+            // Print options
+            PrintColumns.twoColumns("""
+                    Which special would you like?
+                    (1) Green Mountain Melt
+                    (2) Smokehouse Stack
+                    (3) Southwest Sunrise
+                    (4) Pastrami King
+                    (5) Garden Delight
+                    (6) Mediterranean Delight
+                    (0) Return to previous menu
+                    """, PrintMenu.specialsMenu());
+            // Get first character of user input
+            char specialsMenuOption = getValidInput(String.class).charAt(0);
+            boolean isRunning = true;
+            while (isRunning) {
+                // Create correct SpecialSandwichOrder based on user input
+                switch (specialsMenuOption) {
+                    case '1' -> {
+                        customerOrder.getMenuItems().add(new SpecialSandwichOrder("green mountain melt"));
+                        isRunning = false;
+                    }
+                    case '2' -> {
+                        customerOrder.getMenuItems().add(new SpecialSandwichOrder("smokehouse stack"));
+                        isRunning = false;
+                    }
+                    case '3' -> {
+                        customerOrder.getMenuItems().add(new SpecialSandwichOrder("southwest sunrise"));
+                        isRunning = false;
+                    }
+                    case '4' -> {
+                        customerOrder.getMenuItems().add(new SpecialSandwichOrder("pastrami king"));
+                        isRunning = false;
+                    }
+                    case '5' -> {
+                        customerOrder.getMenuItems().add(new SpecialSandwichOrder("garden delight"));
+                        isRunning = false;
+                    }
+                    case '6' -> {
+                        customerOrder.getMenuItems().add(new SpecialSandwichOrder("mediterranean delight"));
+                        isRunning = false;
+                    }
+                    case '0' -> {
+                        System.out.println("Returning to previous menu....");
+                        return;
+                    }
+                    default -> System.out.println("Invalid menu option, please try again.");
+                }
+            }
+            isRunning = true;
+            while (isRunning) {
+                // Print options
+                PrintColumns.twoColumns("""
+                        Would you like to add another special?
+                        (Y) Yes
+                        (N) No, return to previous menu
+                        """, PrintMenu.specialsMenu());
+                // Get first character of user input
+                char addSpecialOption = getValidInput(String.class).charAt(0);
+                switch (addSpecialOption) {
+                    case 'y' -> isRunning = false; // End while loops
+                    case 'n' -> {
+                        return; // Exit method
+                    }
+                    default -> System.out.println("Invalid menu option, please try again.");
+                }
+            }
+        }
+    }
+
     private static void addDrink() {
 
         Size drinkSize = null;
@@ -892,6 +827,70 @@ public class UserInterface {
         }
         // Add Chips to customerOrder
         customerOrder.getMenuItems().add(new Chips(chipsType));
+    }
+
+    private static void checkoutMenu() {
+
+        while (true) {
+            // Print checkout menu
+            PrintColumns.twoColumns("""
+                    Would you like to checkout?
+                    (1) Yes, checkout
+                    (2) No, I want to remove an item
+                    (3) Return to previous menu
+                    """, OrderWriter.toString(customerOrder));
+            // Get first character of user input
+            char checkoutMenuOption = getValidInput(String.class).charAt(0);
+            switch (checkoutMenuOption) {
+                case '1' -> {
+                    checkout(); // Call checkout method
+                    return;
+                }
+                case '2' -> checkoutRemoveMenu(); // Call checkoutRemoveMenu method
+                case '3' -> {
+                    return;
+                }
+                default -> System.out.println("Invalid menu option, please try again.");
+            }
+        }
+    }
+
+    private static void checkoutRemoveMenu() {
+
+        while (true) {
+            // Print options
+            PrintColumns.twoColumns("""
+                    Which number item would you like to remove?
+                    Or, press (0) to return to previous menu
+                    """, OrderWriter.toString(customerOrder));
+            // Get integer from user
+            int removeItemNum = getValidInput(Integer.class);
+            // If integer is invalid, reprompt
+            if (removeItemNum < 0 || removeItemNum > customerOrder.getMenuItems().size()) {
+                System.out.println("Sorry, I don't see that number on the order.");
+                // If integer is 0, exit
+            } else if (removeItemNum == 0) {
+                return;
+                // Otherwise, remove appropriate MenuItem by using index
+            } else {
+                customerOrder.getMenuItems().remove(removeItemNum - 1);
+                System.out.println("Item successfully removed.");
+            }
+        }
+    }
+
+    private static void checkout() {
+        // Call writeReceipt static method
+        OrderWriter.writeReceipt(customerOrder);
+        // Print receipt and thank you message
+        PrintColumns.twoColumns("""
+                Your receipt has been printed.
+                Thank you for coming to Delicatessen Delights, please come again!
+                """, OrderWriter.toString(customerOrder));
+        // Clear customerOrder
+        customerOrder.getMenuItems().clear();
+        input.close(); // Close scanner
+        System.exit(0); // Exit program
     }
 
     private static <T> T getValidInput(Class<T> type) {

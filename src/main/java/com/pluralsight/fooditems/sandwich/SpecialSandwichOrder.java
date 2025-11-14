@@ -106,7 +106,7 @@ public class SpecialSandwichOrder extends SandwichOrder {
 
     @Override
     public String toString() {
-        super.toString(sandwichName);
+        return super.toString(sandwichName);
     }
 
 }

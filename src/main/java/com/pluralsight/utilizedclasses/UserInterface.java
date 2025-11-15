@@ -373,7 +373,7 @@ public class UserInterface {
                             (7) Olives
                             (8) Spinach
                             (9) Mushrooms
-                            (0) None
+                            (0) None/no more
                         """, PrintMenu.sandwichMenu(), currentSandwich.toString("Current sandwich:"));
                 // Get first character of user input
                 char chooseToppingMenuOption = getValidInput(String.class).charAt(0);
@@ -512,7 +512,7 @@ public class UserInterface {
                         What side would you like to add?
                             (1) Pickles
                             (2) Fries
-                            (0) None
+                            (0) None/no more
                         """, PrintMenu.sandwichMenu(), currentSandwich.toString("Current sandwich:"));
                 // Get first character of user input
                 char chooseSideOption = getValidInput(String.class).charAt(0);
@@ -755,19 +755,19 @@ public class UserInterface {
             // Print checkout menu
             PrintColumns.twoColumns("""
                     Would you like to checkout?
-                    (1) Yes, checkout
-                    (2) No, I want to remove an item
-                    (3) Return to previous menu
+                    (Y) Yes, checkout
+                    (N) No, I want to remove an item
+                    (X) Return to previous menu
                     """, OrderWriter.toString(customerOrder));
             // Get first character of user input
             char checkoutMenuOption = getValidInput(String.class).charAt(0);
             switch (checkoutMenuOption) {
-                case '1' -> {
+                case 'y' -> {
                     checkout(); // Call checkout method
                     return;
                 }
-                case '2' -> checkoutRemoveMenu(); // Call checkoutRemoveMenu method
-                case '3' -> {
+                case 'n' -> checkoutRemoveMenu(); // Call checkoutRemoveMenu method
+                case 'x' -> {
                     return;
                 }
                 default -> System.out.println("Invalid menu option, please try again.");
